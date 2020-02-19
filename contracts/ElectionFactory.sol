@@ -17,19 +17,19 @@ contract ElectionFactory {
     uint private _electionId;
 
     event electionCreated(uint idElection);
+    event electionStarted(address addressElection);
 
-    function createElection(
+    function createElectionPattern(
         string memory _name,
         uint _numberOfCandidates
     ) public
-      returns (uint idElection)
     {
         _electionId ++;
         _elections[_electionId] = ElectionPattern(_electionId, _name, _numberOfCandidates);
         emit electionCreated(_electionId);
     }
 
-    function listElections(
+    function listElectionsPatterns(
     ) public
       view
       returns (uint[] memory ids, string[] memory names, uint[] memory numberOfCandidates)
@@ -52,17 +52,25 @@ contract ElectionFactory {
     }
 
     function startElection(
-        uint _electionId,
-        string[] memory _candidatesName
-    ) public 
-      returns (address contractId)
+        uint electionId,
+        string[] memory candidatesName
+    ) public
     {
-        require(_elections[_electionId].id != 0 , 'invalid election');
-        ElectionPattern memory _electionPattern = _elections[_electionId];
-        require(_candidatesName.length == _electionPattern.numberOfCandidates, 'invalid number of candidates');
-        Election _instance = new Election(_candidatesName);
-        address _instanceAddress = address(_instance);
-        _electionsInstance[msg.sender].push(_instanceAddress);
-        return _instanceAddress;
+        require(_elections[electionId].id != 0 , 'ElectionFactory: invalid election');
+        ElectionPattern memory electionPattern = _elections[electionId];
+        require(candidatesName.length == electionPattern.numberOfCandidates, 'ElectionFactory: invalid number of candidates');
+        Election instance = new Election(candidatesName);
+        address instanceAddress = address(instance);
+        _electionsInstance[msg.sender].push(instanceAddress);
+        emit electionStarted(instanceAddress);
+    }
+
+    function getElectionInstancesAddressesByOwnerAddress(
+        address ownerAddress
+    ) public
+      view
+      returns (address[] memory)
+    {
+        return _electionsInstance[ownerAddress];
     }
 }

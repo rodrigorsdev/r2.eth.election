@@ -9,8 +9,8 @@ contract Election {
         uint voteCount;
     }
 
-    mapping(uint => Candidate) public _candidates;
-    uint private _candidatesCount;
+    mapping(uint => Candidate) private _candidates;
+    uint private _cadidatesId;
 
     mapping(address => bool) private _voters;
 
@@ -31,8 +31,8 @@ contract Election {
         string memory _name
     ) internal
     {
-        _candidatesCount ++;
-        _candidates[_candidatesCount] = Candidate(_candidatesCount, _name, 0);
+        _cadidatesId ++;
+        _candidates[_cadidatesId] = Candidate(_cadidatesId, _name, 0);
     }
 
     function listCandidates(
@@ -40,13 +40,13 @@ contract Election {
       view
       returns (uint[] memory, string[] memory, uint[] memory)
     {
-        uint[] memory _ids = new uint[](_candidatesCount);
-        string[] memory _names = new string[](_candidatesCount);
-        uint[] memory _votes = new uint[](_candidatesCount);
+        uint[] memory _ids = new uint[](_cadidatesId);
+        string[] memory _names = new string[](_cadidatesId);
+        uint[] memory _votes = new uint[](_cadidatesId);
 
         uint j = 0;
 
-        for(uint i = 1; i <= _candidatesCount; i++){
+        for(uint i = 1; i <= _cadidatesId; i++){
             _ids[j] = _candidates[i].id;
             _names[j] =_candidates[i].name;
             _votes[j] =_candidates[i].voteCount;
@@ -62,7 +62,7 @@ contract Election {
     ) public
     {
         require(!_voters[msg.sender], 'already voted');
-        require(_candidateId > 0 && _candidateId <= _candidatesCount, 'invalid candidate');
+        require(_candidateId > 0 && _candidateId <= _cadidatesId, 'invalid candidate');
 
         _voters[msg.sender] = true;
 

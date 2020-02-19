@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Election Factory</title>
+    <link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="./vendor/sbAdmin2/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                <div class="sidebar-brand-text mx-3">
+                    Election Factory
+                </div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFactory"
+                    aria-expanded="true" aria-controls="collapseFactory">
+                    <i class="fas fa-fw fa-exchange-alt"></i>
+                    <span>Factory</span>
+                </a>
+                <div id="collapseFactory" class="collapse" aria-labelledby="headingFactory"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="index.html">Election patterns</a>
+                        <a class="collapse-item" href="#addElectionPatternModal" data-toggle="modal">Add election pattern</a>
+                    </div>
+                </div>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseElection"
+                    aria-expanded="true" aria-controls="collapseTransfer">
+                    <i class="fas fa-fw fa-exchange-alt"></i>
+                    <span>Election</span>
+                </a>
+                <div id="collapseElection" class="collapse" aria-labelledby="headingElection"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Consult</a>
+                        <a class="collapse-item" href="#">Vote</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <i class="fas fa-wallet"></i>&nbsp;
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 large" id="connectedAddress"></span>
+                </nav>
+                <div class="container-fluid">
+                    <h1 class="h3 mb-2 text-gray-800">Election Patterns</h1>
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="electionPatternsTable" width="100%" cellspacing="0">
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addElectionPatternModal" role="dialog">
+            <div class="modal-dialog">
+                <form id="addElectionPattern">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Election Pattern</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" required></input>
+                            </div>
+                            <div class="form-group">
+                                <label>Number of candidates</label>
+                                <input type="text" class="form-control" required></input>
+                            </div>
+                            <div id="addElectionPattern-result-success" class="alert alert-success">
+                                <span id="addElectionPattern-result-success-text"></span>
+                            </div>
+                            <div id="addElectionPattern-result-danger" class="alert alert-danger">
+                                <span id="addElectionPattern-result-danger-text"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="addElectionPattern-submit-button" type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="./vendor/jquery/jquery.min.js"></script>
+        <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="./vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="./js/index.js"></script>
+</body>
+
+</html>
