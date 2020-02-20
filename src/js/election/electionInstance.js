@@ -1,5 +1,6 @@
 import { listElectionPatterns } from '../factory/electionPatterns';
 import { setMessage } from '../util/message'
+import { loadContractInstanceAddressDropDownVoteResult } from '../election/vote';
 
 let $createElectionPatternSelect;
 let $createElectionInstanceForm;
@@ -95,6 +96,9 @@ export const electionInstanceFormSubmit = async () => {
                     $createElectionInstanceMessageDangerText,
                     messageType,
                     message);
+
+                await loadContractInstanceAddressDropDownVoteResult();
+                await loadContractInstanceAddressDropDown();
             }
         }
     });

@@ -106,10 +106,15 @@ export const voteFormSubmit = async () => {
                     candidateId = e.target.elements[i].value;
             }
 
-            await electionContractInstance.vote(candidateId);
+            if (candidateId > 0) {
 
-            messageType = 'success';
-            message = `vote success`;
+                await electionContractInstance.vote(candidateId);
+
+                messageType = 'success';
+                message = `vote success`;
+            } else {
+                message = 'invalid candidate';
+            }
         } catch (err) {
             message = `vote error: ${err.message}`;
         } finally {
@@ -120,6 +125,8 @@ export const voteFormSubmit = async () => {
                 $voteMessageDangerText,
                 messageType,
                 message);
+
+            await loadVoteResultTable();
         }
     });
 };

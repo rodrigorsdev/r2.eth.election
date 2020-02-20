@@ -106,7 +106,7 @@ export const electionPatternFormSubmit = async () => {
                     messageType,
                     message);
 
-                await listElectionPatterns();
+                    await loadElectionPatternTable();
             }
         }
     });
