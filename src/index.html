@@ -21,14 +21,15 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFactory"
                     aria-expanded="true" aria-controls="collapseFactory">
-                    <i class="fas fa-fw fa-exchange-alt"></i>
+                    <i class="fas fa-industry"></i>
                     <span>Factory</span>
                 </a>
                 <div id="collapseFactory" class="collapse" aria-labelledby="headingFactory"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="index.html">Election patterns</a>
-                        <a class="collapse-item" href="#addElectionPatternModal" data-toggle="modal">Add election pattern</a>
+                        <h6 class="collapse-header">Pattern</h6>
+                        <a class="collapse-item" href="index.html">List</a>
+                        <a class="collapse-item" href="#addElectionPatternModal" data-toggle="modal">Add</a>
                     </div>
                 </div>
             </li>
@@ -36,14 +37,15 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseElection"
                     aria-expanded="true" aria-controls="collapseTransfer">
-                    <i class="fas fa-fw fa-exchange-alt"></i>
+                    <i class="fas fa-vote-yea"></i>
                     <span>Election</span>
                 </a>
                 <div id="collapseElection" class="collapse" aria-labelledby="headingElection"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Consult</a>
-                        <a class="collapse-item" href="#">Vote</a>
+                        <a id="consultLink" class="collapse-item" href="#createElectionInstanceModal"
+                            data-toggle="modal">Create</a>
+                        <a class="collapse-item" href="#voteModal" data-toggle="modal">Vote</a>
                     </div>
                 </div>
             </li>
@@ -60,13 +62,12 @@
                     <span class="mr-2 d-none d-lg-inline text-gray-600 large" id="connectedAddress"></span>
                 </nav>
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Election Patterns</h1>
+                    <h1 id="pageTitle" class="h3 mb-2 text-gray-800">Election Patterns</h1>
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="electionPatternsTable" width="100%" cellspacing="0">
-                                    
-                                </table>
+                                <table class="table table-bordered" id="electionPatternsTable" width="100%"
+                                    cellspacing="0"> </table>
                             </div>
                         </div>
                     </div>
@@ -101,7 +102,82 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="addElectionPattern-submit-button" type="submit" class="btn btn-primary">Submit</button>
+                            <button id="addElectionPattern-submit-button" type="submit"
+                                class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="createElectionInstanceModal" role="dialog">
+            <div class="modal-dialog">
+                <form id="createElectionInstance">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create Election</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Pattern</label>
+                                <select id="createElectionPattern" class="form-control">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Candidates</label>
+                                <input type="text" class="form-control" required></input>
+                            </div>
+                            <div id="createElectionInstance-result-success" class="alert alert-success">
+                                <span id="createElectionInstance-result-success-text"></span>
+                            </div>
+                            <div id="createElectionInstance-result-danger" class="alert alert-danger">
+                                <span id="createElectionInstance-result-danger-text"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="createElectionInstance-submit-button" type="submit"
+                                class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="voteModal" role="dialog">
+            <div class="modal-dialog">
+                <form id="vote">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Vote</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Contract address</label>
+                                <select id="electionInstanceAddress" class="form-control">
+                                </select>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="electionCandidatesTable" width="100%"
+                                    cellspacing="0"></table>
+                            </div>
+                            <div id="vote-result-success" class="alert alert-success">
+                                <span id="vote-result-success-text"></span>
+                            </div>
+                            <div id="vote-result-danger" class="alert alert-danger">
+                                <span id="vote-result-danger-text"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="vote-submit-button" type="submit"
+                                class="btn btn-primary">Submit</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>

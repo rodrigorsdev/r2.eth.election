@@ -1,4 +1,5 @@
 import { setMessage } from '../util/message';
+import { removeTableRow, addTableHeader, addTableRow } from '../util/table';
 
 let $electionPatternsTable;
 let $addElectionPatternForm;
@@ -31,54 +32,33 @@ export const registerElectionPatternsElements = (
 }
 
 export const listElectionPatterns = async () => {
-    if ($electionPatternsTable.rows.length > 0) {
-        for (let i = $electionPatternsTable.rows.length - 1; i > 0; i--) {
-            $electionPatternsTable.deleteRow(i);
-        }
+
+    let result;
+
+    try {
+        result = await contractInstance.listElectionsPatterns();
+    } catch (err) {
+        console.error(`listElectionPatterns: ${err.message}`)
     }
 
-    let headerRow = document.createElement('tr');
+    return result;
+};
 
-    let idHeader = document.createElement('th');
-    let idHeaderText = document.createTextNode('Id');
-    idHeader.appendChild(idHeaderText);
+export const loadElectionPatternTable = async () => {
+    try {
+        removeTableRow($electionPatternsTable);
 
-    let nameHeader = document.createElement('th');
-    let nameHeaderText = document.createTextNode('Name');
-    nameHeader.appendChild(nameHeaderText);
+        addTableHeader($electionPatternsTable, ['Id', 'Name', 'Number of candidates']);
 
-    let candidateHeader = document.createElement('th');
-    let candidateHeaderText = document.createTextNode('Number of candidates');
-    candidateHeader.appendChild(candidateHeaderText);
+        const result = await listElectionPatterns();
 
-    headerRow.appendChild(idHeader);
-    headerRow.appendChild(nameHeader);
-    headerRow.appendChild(candidateHeader);
-
-    $electionPatternsTable.appendChild(headerRow);
-
-    const result = await contractInstance.listElectionsPatterns();
-
-    for (let i = 0; i < result.ids.length; i++) {
-        let newRow = document.createElement('tr');
-
-        let idTd = document.createElement('td');
-        let idTdText = document.createTextNode(result.ids[i]);
-        idTd.appendChild(idTdText);
-
-        let nameTd = document.createElement('td');
-        let nameTdText = document.createTextNode(result.names[i]);
-        nameTd.appendChild(nameTdText);
-
-        let candidatesTd = document.createElement('td');
-        let candidatesTdText = document.createTextNode(result.numberOfCandidates[i]);
-        candidatesTd.appendChild(candidatesTdText);
-
-        newRow.appendChild(idTd);
-        newRow.appendChild(nameTd);
-        newRow.appendChild(candidatesTd);
-
-        $electionPatternsTable.appendChild(newRow);
+        if (result) {
+            for (let i = 0; i < result.ids.length; i++) {
+                addTableRow($electionPatternsTable, [result.ids[i], result.names[i], result.numberOfCandidates[i]]);
+            }
+        }
+    } catch (err) {
+        console.error(`loadElectionPatternTable: ${err.message}`);
     }
 };
 

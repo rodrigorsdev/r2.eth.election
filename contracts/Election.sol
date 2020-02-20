@@ -38,7 +38,7 @@ contract Election {
     function listCandidates(
     ) public 
       view
-      returns (uint[] memory, string[] memory, uint[] memory)
+      returns (uint[] memory ids, string[] memory names, uint[] memory votes)
     {
         uint[] memory _ids = new uint[](_cadidatesId);
         string[] memory _names = new string[](_cadidatesId);

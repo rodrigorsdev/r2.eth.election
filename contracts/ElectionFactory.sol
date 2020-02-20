@@ -65,12 +65,11 @@ contract ElectionFactory {
         emit electionStarted(instanceAddress);
     }
 
-    function getElectionInstancesAddressesByOwnerAddress(
-        address ownerAddress
+    function listElectionInstancesAddressesByOwnerAddress(
     ) public
       view
       returns (address[] memory)
     {
-        return _electionsInstance[ownerAddress];
+        return _electionsInstance[msg.sender];
     }
 }
