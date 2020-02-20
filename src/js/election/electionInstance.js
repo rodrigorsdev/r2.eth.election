@@ -1,7 +1,5 @@
 import { listElectionPatterns } from '../factory/electionPatterns';
-import { setMessage } from '../util/message';
-import { initEthersContract } from '../connection/contract';
-import { removeTableRow, addTableHeader, addTableRow, addRadio } from '../util/table';
+import { setMessage } from '../util/message'
 
 let $createElectionPatternSelect;
 let $createElectionInstanceForm;
@@ -11,18 +9,8 @@ let $createElectionInstanceMessageDanger;
 let $createElectionInstanceMessageDangerText;
 let $createElectionInstanceFormSubmitButton;
 let $electionInstanceAddressSelect;
-let $electionCandidatesTable;
 
-let $voteForm;
-let $voteMessageSuccess;
-let $voteMessageSuccessText;
-let $voteMessageDanger;
-let $voteMessageDangerText;
-
-let electionBuildJson;
-let provider;
 let contractInstance;
-let electionContractInstance;
 
 export const registerElectionInstanceElements = (
     _createElectionPatternSelect,
@@ -33,14 +21,6 @@ export const registerElectionInstanceElements = (
     _createElectionInstanceMessageDangerText,
     _createElectionInstanceFormSubmitButton,
     _electionInstanceAddressSelect,
-    _electionCandidatesTable,
-    _voteForm,
-    _voteMessageSuccess,
-    _voteMessageSuccessText,
-    _voteMessageDanger,
-    _voteMessageDangerText,
-    _electionBuildJson,
-    _provider,
     _contractInstance
 ) => {
     $createElectionPatternSelect = _createElectionPatternSelect;
@@ -51,14 +31,6 @@ export const registerElectionInstanceElements = (
     $createElectionInstanceMessageDangerText = _createElectionInstanceMessageDangerText;
     $createElectionInstanceFormSubmitButton = _createElectionInstanceFormSubmitButton;
     $electionInstanceAddressSelect = _electionInstanceAddressSelect;
-    $electionCandidatesTable = _electionCandidatesTable;
-    $voteForm = _voteForm;
-    $voteMessageSuccess = _voteMessageSuccess;
-    $voteMessageSuccessText = _voteMessageSuccessText;
-    $voteMessageDanger = _voteMessageDanger;
-    $voteMessageDangerText = _voteMessageDangerText;
-    electionBuildJson = _electionBuildJson;
-    provider = _provider;
     contractInstance = _contractInstance;
 };
 
@@ -149,75 +121,4 @@ export const loadContractInstanceAddressDropDown = async () => {
         opt.innerHTML = `${result[i]}`;
         $electionInstanceAddressSelect.appendChild(opt);;
     }
-};
-
-export const voteAddressSelected = () => {
-    $electionInstanceAddressSelect.addEventListener('change', async (e) => {
-        if ($electionInstanceAddressSelect.value != 0) {
-            electionContractInstance = initEthersContract(
-                provider,
-                electionBuildJson.abi,
-                $electionInstanceAddressSelect.value
-            );
-            const result = await listElectionCandidates();
-            await loadElectionCandidateTable(result);
-        }
-    });
-};
-
-const loadElectionCandidateTable = async (candidates) => {
-    try {
-        removeTableRow($electionCandidatesTable);
-
-        addTableHeader($electionCandidatesTable, ['Id', 'Name', ' ']);
-
-        if (candidates) {
-            for (let i = 0; i < candidates.ids.length; i++) {
-                addTableRow($electionCandidatesTable, [candidates.ids[i], candidates.names[i]]);
-            }
-
-            addRadio($electionCandidatesTable);
-        }
-    } catch (err) {
-        console.error(`loadElectionCandidateTable: ${err.message}`);
-    }
-};
-
-const listElectionCandidates = async () => {
-    return await electionContractInstance.listCandidates();
-};
-
-export const clearVoteForm = () => {
-    $voteMessageSuccess.style.display = 'none';
-    $voteMessageSuccessText.innerHTML = '';
-    $voteMessageDanger.style.display = 'none';
-    $voteMessageDangerText.innerHTML = '';
-};
-
-export const voteFormSubmit = async () => {
-    $voteForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        let messageType = 'danger';
-        let message = '';
-
-        try {
-            const id = e.target.elements[2].value;
-
-            console.log(e.target.elements);
-
-            messageType = 'success';
-            message = `vote success`;
-        } catch (err) {
-            message = `vote error: ${err.message}`;
-        } finally {
-            setMessage(
-                $voteMessageSuccess,
-                $voteMessageSuccessText,
-                $voteMessageDanger,
-                $voteMessageDangerText,
-                messageType,
-                message);
-        }
-    });
 };

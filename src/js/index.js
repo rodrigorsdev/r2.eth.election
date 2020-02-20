@@ -4,8 +4,9 @@ import Election from '../../build/contracts/Election.json';
 import { initEthers, setConnectedAccount } from './connection/ethers';
 import { initEthersContract } from './connection/contract';
 
-import { registerElectionInstanceElements, clearElectionInstanceForm, loadPatternDorpDown, electionInstanceFormSubmit, loadContractInstanceAddressDropDown, voteAddressSelected, clearVoteForm, voteFormSubmit } from './election/electionInstance';
+import { registerElectionInstanceElements, clearElectionInstanceForm, loadPatternDorpDown, electionInstanceFormSubmit, loadContractInstanceAddressDropDown } from './election/electionInstance';
 import { registerElectionPatternsElements, loadElectionPatternTable, clearElectionPatternForm, electionPatternFormSubmit } from './factory/electionPatterns';
+import { registeVoteElements, voteAddressSelected, clearVoteForm, voteFormSubmit, voteAddressSelectedVoteReult, loadContractInstanceAddressDropDownVoteResult } from './election/vote';
 
 let ethers;
 let contractInstance;
@@ -29,11 +30,15 @@ let $createElectionInstanceMessageDangerText;
 let $createElectionInstanceFormSubmitButton;
 let $electionInstanceAddressSelect;
 let $electionCandidatesTable;
+
 let $voteForm;
 let $voteMessageSuccess;
 let $voteMessageSuccessText;
 let $voteMessageDanger;
 let $voteMessageDangerText;
+let $voteSubmitButton;
+let $voteResultTable;
+let $electionInstanceAddressVoteResultSelect;
 
 const registerElements = () => {
     $connectedAddress = document.getElementById('connectedAddress');
@@ -61,6 +66,9 @@ const registerElements = () => {
     $voteMessageSuccessText = document.getElementById('vote-result-success-text');
     $voteMessageDanger = document.getElementById('vote-result-danger');
     $voteMessageDangerText = document.getElementById('vote-result-danger-text');
+    $voteSubmitButton = document.getElementById('vote-submit-button');
+    $voteResultTable = document.getElementById('voteResultTable');
+    $electionInstanceAddressVoteResultSelect = document.getElementById('electionInstanceAddressVoteResult');
 };
 
 const init = async () => {
@@ -90,23 +98,32 @@ const init = async () => {
             $createElectionInstanceMessageDangerText,
             $createElectionInstanceFormSubmitButton,
             $electionInstanceAddressSelect,
-            $electionCandidatesTable,
-            $voteForm,
-            $voteMessageSuccess,
-            $voteMessageSuccessText,
-            $voteMessageDanger,
-            $voteMessageDangerText,
-            Election,
-            ethers,
             contractInstance
         );
         clearElectionInstanceForm();
         await loadPatternDorpDown();
         await electionInstanceFormSubmit();
         await loadContractInstanceAddressDropDown();
-        voteAddressSelected();
+
+        registeVoteElements(
+            $voteForm,
+            $voteMessageSuccess,
+            $voteMessageSuccessText,
+            $voteMessageDanger,
+            $voteMessageDangerText,
+            $electionInstanceAddressSelect,
+            $electionCandidatesTable,
+            $voteSubmitButton,
+            $voteResultTable,
+            $electionInstanceAddressVoteResultSelect,
+            Election,
+            ethers
+        );
         clearVoteForm();
+        voteAddressSelected();
         await voteFormSubmit();
+        await loadContractInstanceAddressDropDownVoteResult();
+        voteAddressSelectedVoteReult();
 
     } catch (err) {
         console.error(err.message);

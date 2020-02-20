@@ -46,6 +46,7 @@
                         <a id="consultLink" class="collapse-item" href="#createElectionInstanceModal"
                             data-toggle="modal">Create</a>
                         <a class="collapse-item" href="#voteModal" data-toggle="modal">Vote</a>
+                        <a class="collapse-item" href="#voteResultModal" data-toggle="modal">Result</a>
                     </div>
                 </div>
             </li>
@@ -178,6 +179,35 @@
                         <div class="modal-footer">
                             <button id="vote-submit-button" type="submit"
                                 class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="voteResultModal" role="dialog">
+            <div class="modal-dialog">
+                <form id="voteResult">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Vote result</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Contract address</label>
+                                <select id="electionInstanceAddressVoteResult" class="form-control">
+                                </select>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="voteResultTable" width="100%"
+                                    cellspacing="0"></table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>

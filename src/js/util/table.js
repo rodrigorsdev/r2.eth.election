@@ -38,13 +38,14 @@ export const addTableRow = ($table, rows) => {
     }
 };
 
-export const addRadio = ($table) => {
+export const addRadio = ($table, $form) => {
     for (let i = 1; i < $table.rows.length; i++) {
         let td = document.createElement('td');
         let radio = document.createElement("input");
         radio.type = 'radio';
         radio.name = 'radioTd';
-        radio.value = $table.rows[i].cells[0];
+        radio.value = $table.rows[i].cells[0].innerHTML;
+        $form.appendChild(radio);
         td.appendChild(radio);
         $table.rows[i].appendChild(td);
     }
