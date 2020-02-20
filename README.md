@@ -73,6 +73,3 @@ truffle migrate --network <network_name>
 ```
 
 Contract address and transaction ID will be shown on screen.
-
-
-Contract Rinkeby Address: 0xEF59Fb316Ac55399b859cB2033a75779b90232fa
